@@ -19,6 +19,7 @@ Once the complete image set has been labeled, a textfile containing labels for e
     1. Create database 
         1. _(??? not necessary ???)_ `rake db:create`
         1. `rake db:migrate`
+        1. `rake db:seed` (creates default admin with `fake@blah.com`/`ChangeMeRightAway1`, change in `db\seeds.rb`)
     1. Install Gems etc
     1. Set config values for your environment
 4. Upload image set and define labels
