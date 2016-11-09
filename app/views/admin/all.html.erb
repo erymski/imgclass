@@ -1,0 +1,33 @@
+<h2>All users</h2>
+
+<table class="table table-condensed .table-striped">
+  <thead>
+    <tr>
+      <th>User name</th>
+      <th>Admin?</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td>
+            <% if user.is_admin %>
+            <span class="glyphicon glyphicon-ok"></span>
+            <% end %>
+        </td>
+        <td>
+            <%# No actions for currently active user %>
+            <% if current_user.id != user.id %>
+                <%= link_to 'Delete', admin_path(:id => user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+            <% else %>
+            n/a
+            <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
