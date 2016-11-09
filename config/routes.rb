@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   get 'admin/all' => 'admin#all'
   delete 'admin' => 'admin#destroy'
+  post 'admin/to_user/:id' => 'admin#to_user'
+  post 'admin/to_admin/:id' => 'admin#to_admin'
 
   resources :image_labels
   resources :jobs
