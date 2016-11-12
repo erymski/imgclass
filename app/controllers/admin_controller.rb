@@ -3,6 +3,9 @@ class AdminController < ApplicationController
     before_action :set_user, only: [:destroy, :to_admin, :to_user]
     before_action :avoid_current_user, only: [:destroy, :to_admin, :to_user]
 
+    def dashboard
+    end
+
     def all
         @users = User.all
     end

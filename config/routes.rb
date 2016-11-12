@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'image_labels/outofwork' => 'image_labels#outofwork'
   get 'images/:set_id/:filename' => 'images#one', :constraints => {:filename => /[^\/]+/} #ER: is it correct?
 
+  get 'admin' => 'admin#dashboard' # default route for admin
   get 'admin/all' => 'admin#all'
   delete 'admin' => 'admin#destroy'
   post 'admin/to_user/:id' => 'admin#to_user'
