@@ -22,6 +22,7 @@ Once the complete image set has been labeled, a textfile containing labels for e
         1. `rake db:seed` (creates default admin with `fake@blah.com`/`ChangeMeRightAway1`, change in `db\seeds.rb`)
     1. Install Gems etc
     1. Set config values for your environment
+        * `config.x.image_upload.rootDir` in `config/application.rb` (to be changed)
 4. Upload image set and define labels
 5. Assign labeling jobs to workers
 6. Download completed training sets
