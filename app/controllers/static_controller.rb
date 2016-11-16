@@ -5,7 +5,8 @@ class StaticController < ApplicationController
       if current_user.is_admin then
         redirect_to url_for(:controller => 'admin', :action => 'dashboard')
       else
-        redirect_to url_for(:controller => 'jobs', :action => 'index')
+        redirect_to url_for(:controller => 'classifier', :action => 'dashboard')
+        #redirect_to url_for(:controller => 'jobs', :action => 'index')
       end
     end 
   end

@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   post 'admin/to_user/:id' => 'admin#to_user'
   post 'admin/to_admin/:id' => 'admin#to_admin'
 
+  get 'do' => 'classifier#dashboard'
+
   resources :image_labels
   resources :jobs
   resources :image_label_sets
