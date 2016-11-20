@@ -16,7 +16,7 @@
             <%# No actions for currently active user %>
             <% if current_user.id != admin.id %>
                 <%= link_to 'Delete', admin_path(:id => admin.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
-                <%= link_to 'To admin', { :action => 'to_user', :id => admin.id }, method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-warning btn-xs" %>
+                <%= link_to 'To user', { :action => 'to_user', :id => admin.id }, method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-warning btn-xs" %>
             <% else %>
                 n/a
             <% end %>

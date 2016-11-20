@@ -1,7 +1,7 @@
 <% if @jobs.empty? %>
   <h3>No jobs available</h3>
-<% else%>
+<% else %>
   <% @jobs.each do |job| %>
-    <%= link_to "Job for #{job.image_label_set_id}", { :controller => 'jobs', :action => 'show', :id => job.id } %>
+    <%= link_to "Job for " + job.image_label_set.image_set.name + " set", { :controller => 'jobs', :action => 'show', :id => job.id } %>
   <% end %>
 <% end %>

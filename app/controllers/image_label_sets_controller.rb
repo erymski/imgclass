@@ -59,6 +59,7 @@ class ImageLabelSetsController < UserController
     end
 
     image_set = ImageSet.new
+    image_set.name = params["name"] || "Unnamed"
     image_set.save
 
     imageDir = image_set.local_dir
@@ -160,13 +161,15 @@ class ImageLabelSetsController < UserController
     #Create a new Job
     j = Job.new
 
+    ils_id = params[:id]
+
     #Assign this job to worker
     j.user_id = params[:userid]
-    j.image_label_set_id = params[:id] # store related ILS
+    j.image_label_set_id = ils_id # store related ILS
     j.save
 
     #Get the next N image_labels for this image_label_set
-    ims = ImageLabelSet.find(params[:id])
+    ims = ImageLabelSet.find(ils_id)
     batch = ims.batchOfRemainingLabels(5000)
     #Assign the next N image_labels to this job
 
@@ -177,7 +180,7 @@ class ImageLabelSetsController < UserController
 
     #binding.pry
 
-    redirect_to action: "assign", id: params[:id]
+    redirect_to action: "assign", id: ils_id
   end
 
   # PATCH/PUT /image_label_sets/1

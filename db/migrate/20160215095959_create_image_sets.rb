@@ -3,6 +3,8 @@ class CreateImageSets < ActiveRecord::Migration
     create_table :image_sets do |t|
 
       t.timestamps null: false
+
+      t.string :name, null: false
     end
   end
 end
