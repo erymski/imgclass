@@ -6,8 +6,12 @@ class AdminController < ApplicationController
     def dashboard
     end
 
-    def all
-        @users = User.all
+    def admins
+        @admins = User.where(:is_admin => true)
+    end
+
+    def users
+        @users = User.where(:is_admin => false)
     end
 
     def to_admin

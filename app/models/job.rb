@@ -21,6 +21,10 @@ class Job < ActiveRecord::Base
     pct.round(1)
   end
 
+  def remaining
+    image_labels.where(:label_id => nil).size
+  end
+
   def percent_agreement
     100
   end
@@ -31,6 +35,4 @@ class Job < ActiveRecord::Base
       il.save
     end
   end
-
-
 end

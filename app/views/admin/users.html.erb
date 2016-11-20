@@ -1,0 +1,23 @@
+<h2>All users</h2>
+
+<table class="table table-condensed .table-striped">
+  <thead>
+    <tr>
+      <th>User name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.email %></td>
+        <td>
+          <%= link_to 'Delete', admin_path(:id => user.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+          <%= link_to 'To admin', { :action => 'to_admin', :id => user.id }, method: :post, data: { confirm: 'Are you sure?' }, class: "btn btn-warning btn-xs" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
