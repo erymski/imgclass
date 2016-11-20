@@ -1,4 +1,7 @@
-<h2>Classifier dashboard</h2>
-<% @jobs.each do |job| %>
-  Job for #<%= job.image_label_set_id %>
+<% if @jobs.empty? %>
+  <h3>No jobs available</h3>
+<% else%>
+  <% @jobs.each do |job| %>
+    Job for #<%= job.image_label_set_id %>
+  <% end %>
 <% end %>
