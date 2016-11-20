@@ -150,7 +150,7 @@ class ImageLabelSetsController < UserController
 
   def assign
     @image_label_set = ImageLabelSet.find(params[:id])
-    @workers = User.all
+    @workers = User.where(:is_admin => false)
     @openjobs = Job.all.select{|j| j.isOpen}
     @completedjobs = Job.all.select{|j| j.isComplete}
     @job = Job.new
