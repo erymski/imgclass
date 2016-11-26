@@ -15,14 +15,11 @@ class Job < ActiveRecord::Base
   end
 
   def percent_remaining
-    totalImages = image_labels.count
-    remainingImages = image_labels.select{ |il| il.label.nil? }
-    pct = (remainingImages.count.to_f/totalImages)*100.0
-    pct.round(1)
+    @percent_remaining ||= ((remaining.to_f / image_labels.count) * 100.0).round(1)
   end
 
   def remaining
-    image_labels.where(:label_id => nil).size
+    @remaining ||= image_labels.where(:label_id => nil).size
   end
 
   def percent_agreement

@@ -16,8 +16,8 @@ class JobsController < UserController
   # GET /jobs/1
   # GET /jobs/1.json
   def show
-    @job = Job.find(params[:id])
-    @unlabeled = @job.image_labels.select{ |il| il.label.nil? }.first
+    # @job = Job.find(params[:id])
+    @unlabeled = @job.image_labels.where(:label_id => nil).first
     #binding.pry
     #@unlabeled = ImageLabel.where("label_id IS ?", nil).first
     if @unlabeled.nil? then redirect_to action: "index" end

@@ -3,14 +3,14 @@
   percentageDone = (100 - @job.percent_remaining).round(0)
 %>
 
-<div id="imgframe">
-  <img class="img-responsive" id="mainimage" src="<%= @unlabeled.image.vpath %>">
+<div class="text-center">
+  <img class="img-thumbnail" src="<%= @unlabeled.image.vpath %>">
 </div>
 
 <div class="progress">
   <div class="progress-bar" role="progressbar" aria-valuenow="<%= percentageDone %>"
       aria-valuemin="0" aria-valuemax="100" style="width:<%= percentageDone %>%">
-    <span><%= percentageDone %>%</span>
+    <span><%= percentageDone %>% (<%= @job.remaining %> images remaining)</span>
   </div>
 </div>
 
