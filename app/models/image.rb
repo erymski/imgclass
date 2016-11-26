@@ -9,13 +9,19 @@ class Image < ActiveRecord::Base
       ImageLabel.where("image_id = ? and label_id = ?", self.id, label.id).count
   end
 
+  # all pairs
   def labels
-    @labels ||= ImageLabel.where("image_id = ?", self.id).map{ |il| il.label }
+    @labels ||= ImageLabel.where(:image_id => self.id).map{ |il| il.label }
+  end
+
+  # select pairs which are really labeled
+  def labeled
+    @labeled ||= ImageLabel.where(:image_id => self.id).where.not(:label_id => nil).map{ |il| il.label }
   end
 
   def most_likely_label_text
-    freq = labels.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-    most_likely = labels.max_by { |v| freq[v] }
+    freq = labeled.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+    most_likely = labeled.max_by { |v| freq[v] }
     most_likely.nil? ? "Unknown" : most_likely.text
   end
 

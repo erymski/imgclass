@@ -1,7 +1,11 @@
 <% if @jobs.empty? %>
   <h3>No jobs available</h3>
 <% else %>
+  <ul class="list-unstyled">
   <% @jobs.each do |job| %>
+    <li>
     <%= link_to "Job for " + job.image_label_set.image_set.name + " set", { :controller => 'jobs', :action => 'show', :id => job.id } %>
+    </li>
   <% end %>
+  </ul>
 <% end %>

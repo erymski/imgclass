@@ -7,7 +7,7 @@ class Job < ActiveRecord::Base
 
 
   def isOpen
-    percent_remaining > 0
+    remaining > 0
   end
 
   def isComplete
