@@ -66,41 +66,45 @@ class ImageLabelSetsController < UserController
     FileUtils::mkdir_p imageDir
     @image_label_set.image_set_id = image_set.id
 
-    params["upload"].each do |uf|
-      #Check if zipfile or raw images
-      if (File.extname(uf.tempfile.path)==".zip")
-        Zip::File.open(uf.tempfile.path) do |zipfile|
-        zipfile.each do |file|
-          if(file.ftype == :file)
-            new_path = imageDir + File.basename(file.name)
-            puts new_path
-            zipfile.extract(file, new_path) unless File.exist?(new_path)
-            fs = FastImage.size(new_path)
-            if (fs and fs[0] >= Rails.configuration.x.image_upload.mindimension) and (fs[1] >= Rails.configuration.x.image_upload.mindimension)
-              i = Image.new
-              i.filename = File.basename(file.name)
-              i.image_set_id = @image_label_set.image_set_id
-              i.save
-            else
-              logger.warn "Skip " + new_path
-              FileUtils.rm(new_path)
+    Image.transaction do
+
+      params["upload"].each do |uf|
+        #Check if zipfile or raw images
+        if (File.extname(uf.tempfile.path)==".zip")
+          Zip::File.open(uf.tempfile.path) do |zipfile|
+          zipfile.each do |file|
+            if(file.ftype == :file)
+              new_path = imageDir + File.basename(file.name)
+              puts new_path
+              zipfile.extract(file, new_path) unless File.exist?(new_path)
+              fs = FastImage.size(new_path)
+              if (fs and fs[0] >= Rails.configuration.x.image_upload.mindimension) and (fs[1] >= Rails.configuration.x.image_upload.mindimension)
+                i = Image.new
+                i.filename = File.basename(file.name)
+                i.image_set_id = @image_label_set.image_set_id
+                i.save
+              else
+                logger.warn "Skip " + new_path
+                FileUtils.rm(new_path)
+              end
+            end
             end
           end
+        else
+          fs = FastImage.size(uf.tempfile.path)
+          if (fs[0] >= Rails.configuration.x.image_upload.mindimension) and (fs[1] >= Rails.configuration.x.image_upload.mindimension)
+            i = Image.new
+            new_path = imageDir + uf.original_filename.to_s
+            FileUtils.mv(uf.tempfile.path, new_path)
+            i.filename = uf.original_filename.to_s
+            i.image_set_id = @image_label_set.image_set_id
+            i.save
           end
         end
-      else
-        fs = FastImage.size(uf.tempfile.path)
-        if (fs[0] >= Rails.configuration.x.image_upload.mindimension) and (fs[1] >= Rails.configuration.x.image_upload.mindimension)
-          i = Image.new
-          new_path = imageDir + uf.original_filename.to_s
-          FileUtils.mv(uf.tempfile.path, new_path)
-          i.filename = uf.original_filename.to_s
-          i.image_set_id = @image_label_set.image_set_id
-          i.save
-        end
+        uf.tempfile.close
+        uf.tempfile.unlink
       end
-      uf.tempfile.close
-      uf.tempfile.unlink
+
     end
 
     respond_to do |format|
