@@ -4,7 +4,9 @@
   <ul class="list-unstyled">
   <% @jobs.each do |job| %>
     <li>
-    <%= link_to "Job for " + job.image_label_set.image_set.name + " set", { :controller => 'jobs', :action => 'show', :id => job.id } %>
+    <%= link_to({ :controller => 'jobs', :action => 'show', :id => job.id }) do %> 
+      Job for <strong><%= job.image_label_set.image_set.name %></strong> set (<%= job.remaining %> images remaining)
+    <% end %>
     </li>
   <% end %>
   </ul>
