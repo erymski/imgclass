@@ -126,9 +126,10 @@ class ImageLabelSetsController < UserController
   end
 
   def download
-    fileLabelsString = ""
-    labelsPath = ImageLabelSet.find(params[:id]).generateLabelsTextfile
-    image_set_id = ImageLabelSet.find(params[:id]).image_set.id 
+    ils = ImageLabelSet.find(params[:id])
+#    set_name = ils.image_set.name
+    labelsPath = ils.generateLabelsTextfile
+    image_set_id = ils.image_set.id 
 
     folder = dir_for_set(image_set_id)
     input_filenames = Dir.entries(folder) - %w(. ..)
