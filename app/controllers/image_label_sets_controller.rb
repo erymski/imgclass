@@ -120,13 +120,17 @@ class ImageLabelSetsController < UserController
 
   # pre-allocate images for labeling
   def alloc
+
     #Create a new ImageLabel for each image in this set
-    ils = ImageLabelSet.find(params[:id]).image_set.images.each do |image|
-      il = ImageLabel.new()
-      il.image = image
-      il.save
+    ImageLabelSet.transaction do
+      ils = ImageLabelSet.find(params[:id]).image_set.images.each do |image|
+        il = ImageLabel.new()
+        il.image = image
+        il.save
+      end
     end
-    redirect_to action: "index"
+
+    redirect_to action: "index", notice: "Images successfully allocated"
   end
 
   def download
@@ -178,9 +182,11 @@ class ImageLabelSetsController < UserController
     batch = ims.batchOfRemainingLabels(5000)
     #Assign the next N image_labels to this job
 
-    batch.each do |il|
-      il.job_id = j.id
-      il.save
+    ImageLabelSet.transaction do
+      batch.each do |il|
+        il.job_id = j.id
+        il.save
+      end
     end
 
     #binding.pry
