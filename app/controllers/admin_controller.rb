@@ -20,7 +20,7 @@ class AdminController < ApplicationController
         @user.save
 
         respond_to do |format|
-            format.html { redirect_to action: "all", notice: 'Role changed to admin.' }
+            format.html { redirect_to action: "dashboard", notice: 'Role changed to admin.' }
             format.json { head :no_content }
         end        
     end
@@ -31,7 +31,7 @@ class AdminController < ApplicationController
         @user.save
 
         respond_to do |format|
-            format.html { redirect_to action: "all", notice: 'Role changed to user.' }
+            format.html { redirect_to action: "dashboard", notice: 'Role changed to user.' }
             format.json { head :no_content }
         end        
     end
@@ -42,7 +42,7 @@ class AdminController < ApplicationController
         @user.destroy
 
         respond_to do |format|
-            format.html { redirect_to action: "all", notice: 'User was successfully deleted.' }
+            format.html { redirect_to action: "dashboard", notice: 'User was successfully deleted.' }
             format.json { head :no_content }
         end        
     end
@@ -60,7 +60,7 @@ private
 
         if current_user.id == @user.id
             respond_to do |format|
-                format.html { redirect_to action: "all", notice: 'Cannot perform action on active user.' }
+                format.html { redirect_to action: "dashboard", notice: 'Cannot perform action on active user.' }
                 format.json { head :no_content }
             end        
         end
